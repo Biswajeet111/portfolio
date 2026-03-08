@@ -1,145 +1,641 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Biswajeet Kumar Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biswajeet Kumar | Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --surface-color: #111111;
+            --surface-color-light: #1a1a1a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ededed;
+            --text-secondary: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --glass-bg: rgba(17, 17, 17, 0.7);
+        }
 
-<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body{
-font-family: Arial, sans-serif;
-background:#0f172a;
-color:white;
-margin:0;
-padding:0;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.08), transparent 25%);
+            background-attachment: fixed;
+        }
 
-header{
-padding:80px;
-text-align:center;
-background:#020617;
-}
+        /* Container & Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-h1{
-font-size:40px;
-color:#3b82f6;
-}
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-section{
-padding:60px;
-max-width:900px;
-margin:auto;
-}
+        section:last-of-type {
+            border-bottom: none;
+        }
 
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:10px;
-margin-top:20px;
-}
+        /* Header / Hero */
+        header {
+            padding: 120px 0 80px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
 
-a{
-color:#60a5fa;
-text-decoration:none;
-}
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-button{
-padding:12px 25px;
-background:#3b82f6;
-border:none;
-border-radius:6px;
-color:white;
-cursor:pointer;
-margin:10px;
-}
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
 
-</style>
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 6px;
+            background: linear-gradient(135deg, #3b82f6, #9333ea);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .headline {
+            font-size: 1.25rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--text-primary);
+            color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #d4d4d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Typography */
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background: var(--border-color);
+            margin-left: 20px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        /* Cards & Grid */
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--surface-color-light);
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        /* Tech Stack */
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .tech-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 80px;
+            padding: 16px 0;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-icon-wrapper i {
+            font-size: 36px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .tech-icon-wrapper span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 0.3s ease;
+        }
+
+        .tech-icon-wrapper:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .tech-icon-wrapper:hover i {
+            color: var(--text-primary);
+            transform: scale(1.1);
+        }
+
+        .tech-icon-wrapper:hover span {
+            opacity: 1;
+            transform: translateY(0);
+            color: var(--text-primary);
+        }
+
+        /* Project Cards */
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            transition: color 0.2s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .project-link::after {
+            content: '→';
+            transition: transform 0.2s ease;
+        }
+
+        .project-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Timeline / Experience */
+        .timeline-item {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 32px;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .timeline-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .timeline-meta {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-family: monospace;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* GitHub Stats */
+        .github-stats-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .github-stat-img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            background: var(--surface-color);
+        }
+
+        .github-stat-img:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .contact-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-link:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
+    <header>
+        <div class="container">
+            <div class="profile-container">
+                <img src="profile.jpg" alt="Biswajeet Kumar" class="profile-img"
+                    onerror="this.src='https://avatars.githubusercontent.com/Biswajeet111'">
+            </div>
+            <h1>Biswajeet Kumar</h1>
+            <p class="headline">Software Developer | Flutter Developer | Full-Stack Enthusiast</p>
+            <p class="hero-desc">Computer Science Engineering student passionate about building scalable, real-world
+                applications with modern tech stacks.</p>
+            <div class="button-group">
+                <a href="https://github.com/Biswajeet111" class="btn btn-primary" target="_blank">GitHub Profile</a>
+                <a href="https://www.linkedin.com/in/biswajeet-kumar-a70043362" class="btn btn-secondary"
+                    target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </header>
 
-<h1>Biswajeet Kumar</h1>
+    <main class="container">
 
-<p>Software Developer | Flutter & Full-Stack Enthusiast</p>
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="card about-text">
+                <p>I am a Computer Science Engineering student with a strong interest in software development, mobile
+                    applications, and backend systems.</p>
+                <p>I thrive on building practical applications that combine intuitive user interfaces with efficient and
+                    scalable backend architectures. My journey involves continuous learning to stay at the cutting edge
+                    of technology.</p>
+                <p>My core projects span across mobile applications, engaging algorithm simulators, and comprehensive
+                    full-stack financial platforms.</p>
+            </div>
+        </section>
 
-<p>
-I build mobile applications and full-stack software solutions.
-</p>
+        <section id="tech-stack">
+            <h2>Tech Stack</h2>
+            <div class="card">
+                <div class="tech-icons">
+                    <div class="tech-icon-wrapper"><i class="devicon-c-plain"></i><span>C</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-cplusplus-plain"></i><span>C++</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-java-plain"></i><span>Java</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-python-plain"></i><span>Python</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-javascript-plain"></i><span>JavaScript</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-dart-plain"></i><span>Dart</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-react-original"></i><span>React</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-nodejs-plain"></i><span>Node.js</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-flutter-plain"></i><span>Flutter</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-mysql-plain"></i><span>MySQL</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
+                    <div class="tech-icon-wrapper"><i class="devicon-git-plain"></i><span>Git</span></div>
+                </div>
+            </div>
+        </section>
 
-<a href="https://github.com/Biswajeet111"><button>GitHub</button></a>
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="grid-3">
 
-<a href="https://www.linkedin.com/in/biswajeet-kumar-a70043362"><button>LinkedIn</button></a>
+                <div class="project-card">
+                    <h3>ResQ – Emergency App</h3>
+                    <p class="project-desc">A lifesaver mobile application designed for locating nearby hospitals and
+                        requesting out emergency services instantly.</p>
+                    <div class="project-tags">
+                        <span class="tag">Android Studio</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Maps API</span>
+                    </div>
+                    <a href="https://github.com/Biswajeet111/ResQ-app" class="project-link" target="_blank">View
+                        Repository</a>
+                </div>
 
-</header>
+                <div class="project-card">
+                    <h3>SchedSim Simulator</h3>
+                    <p class="project-desc">An interactive simulation tool crafted for visualizing complex CPU
+                        scheduling algorithms to assist in OS learning.</p>
+                    <div class="project-tags">
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Dart</span>
+                    </div>
+                    <a href="https://github.com/Biswajeet111" class="project-link" target="_blank">View Repository</a>
+                </div>
 
-<section>
+                <div class="project-card">
+                    <h3>Smart Expense System</h3>
+                    <p class="project-desc">An AI-powered full-stack financial analytics platform tailored for
+                        automating end-to-end payroll processes.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                    <a href="https://github.com/Biswajeet111" class="project-link" target="_blank">View Repository</a>
+                </div>
 
-<h2>About Me</h2>
+            </div>
+        </section>
 
-<div class="card">
+        <section id="experience">
+            <h2>Experience & Education</h2>
+            <div class="grid-2">
 
-<p>
-Computer Science Engineering student passionate about software development, mobile apps, and backend systems.
+                <div class="card">
+                    <h3>Professional Experience</h3>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Web Development Intern</div>
+                        <div class="timeline-meta">Tata Steel | 2024</div>
+                        <div class="timeline-desc">
+                            Developed responsive web modules utilizing HTML, CSS, and modern practices.
+                            Utilized Git/GitHub for seamless collaboration and version control.
+                            Focused on improving UI consistency via extensive user testing.
+                        </div>
+                    </div>
+                </div>
 
-I enjoy building real-world projects and learning modern technologies.
-</p>
+                <div class="card">
+                    <h3>Education</h3>
+                    <div class="timeline-item">
+                        <div class="timeline-title">B.Tech Computer Science</div>
+                        <div class="timeline-meta">Lovely Professional University | Expected 2028</div>
+                        <div class="timeline-desc">Focusing on advanced computing, software engineering, and modern
+                            scalable architectures.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-title">Diploma in Computer Science</div>
+                        <div class="timeline-meta">Government Polytechnic Dhanbad | 2025</div>
+                        <div class="timeline-desc">Built strong foundations in basic computer architecture, programming
+                            logic, and networking.</div>
+                    </div>
+                </div>
 
-</div>
+            </div>
+        </section>
 
-</section>
+        <section id="activity">
+            <h2>GitHub Activity</h2>
+            <div class="github-stats-container">
+                <img class="github-stat-img"
+                    src="https://github-readme-stats.vercel.app/api?username=Biswajeet111&show_icons=true&theme=tokyonight&cache_seconds=1800"
+                    alt="GitHub Stats">
+                <img class="github-stat-img"
+                    src="https://github-readme-activity-graph.vercel.app/graph?username=Biswajeet111&theme=tokyo-night&bg_color=111111&color=3b82f6&line=60a5fa&point=fff"
+                    alt="GitHub Activity Graph">
+            </div>
+        </section>
 
-<section>
+    </main>
 
-<h2>Projects</h2>
-
-<div class="card">
-
-<h3>ResQ – Emergency Medical App</h3>
-
-<p>
-Mobile application for locating nearby hospitals and emergency services.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>SchedSim – CPU Scheduling Simulator</h3>
-
-<p>
-Interactive simulator to visualize CPU scheduling algorithms.
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>AI Smart Expense & Payroll System</h3>
-
-<p>
-Full-stack financial analytics platform for payroll and expense tracking.
-</p>
-
-</div>
-
-</section>
-
-<section>
-
-<h2>Contact</h2>
-
-<div class="card">
-
-<p>Email: biswajeetk497@gmail.com</p>
-
-<p>GitHub: github.com/Biswajeet111</p>
-
-<p>LinkedIn: linkedin.com/in/biswajeet-kumar-a70043362</p>
-
-</div>
-
-</section>
+    <footer>
+        <div class="container">
+            <div class="contact-links">
+                <a href="mailto:biswajeetk497@gmail.com" class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                    </svg>
+                    biswajeetk497@gmail.com
+                </a>
+                <a href="https://github.com/Biswajeet111" class="contact-link" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                        </path>
+                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/biswajeet-kumar-a70043362" class="contact-link" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+            <p>© 2026 Biswajeet Kumar. All rights reserved.</p>
+        </div>
+    </footer>
 
 </body>
+
 </html>
