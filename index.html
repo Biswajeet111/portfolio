@@ -1,454 +1,902 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biswajeet Kumar | Full-Stack Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Option icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
 
-<title>Biswajeet Kumar | Full-Stack Developer</title>
+    <style>
+        :root {
+            /* Core Theme */
+            --bg-color: #050505;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(59, 130, 246, 0.3);
+            
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+            
+            /* Accents */
+            --accent-solid: #3b82f6;
+            --accent-glow: #8b5cf6;
+            --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-text: linear-gradient(to right, #60a5fa, #c084fc);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
+        html {
+            scroll-behavior: smooth;
+        }
 
-<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-:root {
---bg-color: #0a0a0a;
---surface-color: #111111;
---border-color: rgba(255,255,255,0.08);
---text-primary: #ededed;
---text-secondary: #a1a1aa;
---accent: #3b82f6;
-}
+        /* Abstract Background Blobs */
+        .blob-1, .blob-2 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            animation: pulse-blob 12s infinite alternate ease-in-out;
+        }
+        .blob-1 {
+            top: -10%; right: -5%;
+            width: 45vw; height: 45vw;
+            background: var(--accent-solid);
+        }
+        .blob-2 {
+            top: 40%; left: -10%;
+            width: 40vw; height: 40vw;
+            background: var(--accent-glow);
+            animation-delay: -6s;
+        }
 
-* {
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+        @keyframes pulse-blob {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(20px, 40px); }
+            100% { transform: scale(0.9) translate(-20px, -20px); }
+        }
 
-body {
-font-family:'Inter',sans-serif;
-background:var(--bg-color);
-color:var(--text-primary);
-line-height:1.6;
-}
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 24px;
+        }
 
-.container {
-max-width:1100px;
-margin:auto;
-padding:0 20px;
-}
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            transition: 0.3s;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .nav-logo span {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
 
-section {
-padding:80px 0;
-border-bottom:1px solid var(--border-color);
-}
+        @media screen and (max-width: 768px) {
+            .nav-links { gap: 16px; display: none;} /* Simplified for mobile */
+        }
 
-header {
-text-align:center;
-padding:100px 0 70px;
-border-bottom:1px solid var(--border-color);
-}
+        /* Sections */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
 
-.profile-img {
-width:160px;
-height:160px;
-border-radius:50%;
-border:3px solid var(--accent);
-margin-bottom:25px;
-}
+        /* Typography */
+        h1, h2, h3 {
+            line-height: 1.2;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+        .section-title span {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-h1 {
-font-size:3rem;
-font-weight:800;
-margin-bottom:10px;
-}
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px; /* offset navbar */
+        }
+        
+        .profile-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .profile-img-wrap {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            padding: 4px;
+            background: var(--gradient-primary);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+            animation: float 6s ease-in-out infinite;
+        }
 
-.headline {
-color:var(--accent);
-font-size:1.3rem;
-margin-bottom:16px;
-}
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
 
-.hero-desc {
-color:var(--text-secondary);
-max-width:600px;
-margin:auto;
-margin-bottom:30px;
-}
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg-color);
+            background-color: var(--surface-color);
+        }
 
-.button-group {
-display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
-}
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 16px;
+        }
 
-.btn {
-padding:12px 24px;
-border-radius:8px;
-text-decoration:none;
-font-weight:500;
-}
+        .typing-wrapper {
+            margin-bottom: 24px;
+            height: 40px;
+        }
 
-.btn-primary {
-background:white;
-color:black;
-}
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--accent-solid);
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+            max-width: fit-content;
+        }
 
-.btn-secondary {
-background:#1a1a1a;
-color:white;
-border:1px solid var(--border-color);
-}
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
 
-h2 {
-font-size:2rem;
-margin-bottom:40px;
-}
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-solid); }
+        }
 
-.card {
-background:var(--surface-color);
-padding:30px;
-border-radius:16px;
-border:1px solid var(--border-color);
-}
+        .hero-desc {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
 
-.grid-3 {
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:24px;
-}
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-.project-card {
-background:var(--surface-color);
-padding:24px;
-border-radius:16px;
-border:1px solid var(--border-color);
-transition:0.3s;
-}
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.project-card:hover {
-transform:translateY(-6px);
-}
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-color);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
 
-.project-tags {
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin:15px 0;
-}
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+            background: white;
+        }
 
-.tag {
-background:rgba(59,130,246,0.1);
-padding:5px 10px;
-border-radius:20px;
-font-size:0.75rem;
-color:#60a5fa;
-}
+        .btn-secondary {
+            background: var(--surface-color);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
 
-.project-link {
-text-decoration:none;
-color:white;
-font-weight:500;
-}
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+        }
 
-ul {
-color:var(--text-secondary);
-padding-left:20px;
-}
+        /* Cards and Elements base */
+        .glass-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
 
-footer {
-text-align:center;
-padding:40px 0;
-color:var(--text-secondary);
-}
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--surface-hover);
+            transform: translateY(-5px);
+        }
 
-</style>
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .about-text p strong {
+            color: var(--text-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .skill-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border-glow);
+        }
+        .skill-icon {
+            font-size: 1.5rem;
+            color: var(--accent-solid);
+            width: 32px;
+            text-align: center;
+        }
+        .skill-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .folder-icon {
+            font-size: 2.5rem;
+            color: var(--accent-solid);
+        }
+
+        .project-links a {
+            color: var(--text-tertiary);
+            font-size: 1.25rem;
+            margin-left: 12px;
+            transition: 0.3s;
+        }
+        
+        .project-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            flex-grow: 1;
+            margin-bottom: 24px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-pill {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Achievements */
+        .achievements-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .achievements-list li {
+            position: relative;
+            padding-left: 32px;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .achievements-list li i {
+            position: absolute;
+            left: 0;
+            color: #fbbf24;
+            font-size: 1.25rem;
+        }
+
+        /* Contact */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        .contact-item i {
+            color: var(--accent-solid);
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        /* Utility - Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.1rem; border-right: none; white-space: normal; animation: none;} /* Disable typing on very small screens for better layout */
+            .section-title { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .project-card { padding: 20px; }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-
-<div class="container">
-
-<img src="profile.jpg"
-class="profile-img"
-onerror="this.src='https://avatars.githubusercontent.com/Biswajeet111'">
-
-<h1>Biswajeet Kumar</h1>
-
-<p class="headline">
-Full-Stack Developer | AI Enthusiast | Machine Learning Explorer
-</p>
-
-<p class="hero-desc">
-Computer Science Engineering student passionate about building scalable
-real-world applications using modern full-stack and AI technologies.
-</p>
-
-<div class="button-group">
-
-<a href="resume.pdf"
-class="btn btn-primary"
-target="_blank">
-Download Resume
-</a>
-
-<a href="https://github.com/Biswajeet111"
-class="btn btn-secondary"
-target="_blank">
-GitHub
-</a>
-
-<a href="https://www.linkedin.com/in/biswajeet-kumar-a70043362"
-class="btn btn-secondary"
-target="_blank">
-LinkedIn
-</a>
-
-</div>
-
-</div>
-
-</header>
-
-<main class="container">
-
-<!-- ABOUT -->
-
-<section>
-
-<h2>About Me</h2>
-
-<div class="card">
-
-<p>
-I am a Computer Science Engineering student passionate about building
-real-world scalable applications using modern technologies.
-</p>
-
-<p>
-I specialize in full-stack development and AI-powered systems, with
-hands-on experience developing intelligent applications such as
-AI-based study planners and financial analytics platforms.
-</p>
-
-<p>
-My expertise includes backend development, Machine Learning integration,
-and deploying production-ready applications to cloud platforms.
-</p>
-
-</div>
-
-</section>
-
-<!-- SKILLS -->
-
-<section>
-
-<h2>Core Skills</h2>
-
-<div class="grid-3">
-
-<div class="card">
-<h3>Frontend</h3>
-<p>React.js, Next.js, HTML, CSS, JavaScript, Tailwind CSS</p>
-</div>
-
-<div class="card">
-<h3>Backend</h3>
-<p>Python, FastAPI, Node.js, REST APIs</p>
-</div>
-
-<div class="card">
-<h3>AI & Machine Learning</h3>
-<p>Machine Learning, Scikit-Learn, Model Deployment, LLM Integration</p>
-</div>
-
-<div class="card">
-<h3>Databases</h3>
-<p>MongoDB, PostgreSQL, MySQL, Firebase</p>
-</div>
-
-<div class="card">
-<h3>Tools</h3>
-<p>Git, GitHub, Postman, Vercel, Render</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- PROJECTS -->
-
-<section>
-
-<h2>Featured Projects</h2>
-
-<div class="grid-3">
-
-<!-- StudyForge -->
-
-<div class="project-card">
-
-<h3>StudyForge AI — Smart Study Planner</h3>
-
-<p>
-AI-powered personalized study planner using Machine Learning and
-LLM-based insights. Includes analytics dashboard,
-progress tracking, XP gamification, and risk detection.
-</p>
-
-<div class="project-tags">
-
-<span class="tag">FastAPI</span>
-<span class="tag">Next.js</span>
-<span class="tag">MongoDB</span>
-<span class="tag">Scikit-Learn</span>
-<span class="tag">LLM</span>
-
-</div>
-
-<a href="https://github.com/Biswajeet111/ai-study-planner-agent"
-class="project-link"
-target="_blank">
-View Repository →
-</a>
-
-</div>
-
-<!-- Expense System -->
-
-<div class="project-card">
-
-<h3>Smart Expense System</h3>
-
-<p>
-AI-powered financial analytics platform for payroll
-automation and expense tracking.
-</p>
-
-<div class="project-tags">
-
-<span class="tag">React</span>
-<span class="tag">FastAPI</span>
-<span class="tag">PostgreSQL</span>
-
-</div>
-
-<a href="https://github.com/Biswajeet111"
-class="project-link"
-target="_blank">
-View Repository →
-</a>
-
-</div>
-
-<!-- ResQ -->
-
-<div class="project-card">
-
-<h3>ResQ Emergency App</h3>
-
-<p>
-Mobile application designed to locate nearby hospitals
-and assist emergency response.
-</p>
-
-<div class="project-tags">
-
-<span class="tag">Android</span>
-<span class="tag">Firebase</span>
-<span class="tag">Maps API</span>
-
-</div>
-
-<a href="https://github.com/Biswajeet111"
-class="project-link"
-target="_blank">
-View Repository →
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ACHIEVEMENTS -->
-
-<section>
-
-<h2>Achievements</h2>
-
-<div class="card">
-
-<ul>
-
-<li>
-Participated in Code-A-Haunt 3.0 Hackathon
-</li>
-
-<li>
-Built 4+ full-stack real-world applications
-</li>
-
-<li>
-Developed AI-powered applications using Machine Learning
-and LLM integration
-</li>
-
-<li>
-Deployed production-ready applications on cloud platforms
-</li>
-
-</ul>
-
-</div>
-
-</section>
-
-<!-- CONTACT -->
-
-<section>
-
-<h2>Contact</h2>
-
-<div class="card">
-
-<p>
-📧 Email: biswajeetk497@gmail.com
-</p>
-
-<p>
-📍 Location: Jamshedpur, Jharkhand, India
-</p>
-
-<p>
-Open to internship opportunities in
-Software Development, Full-Stack Development,
-and AI Engineering.
-</p>
-
-</div>
-
-</section>
-
-</main>
-
-<footer>
-
-<p>
-© 2026 Biswajeet Kumar | Portfolio
-</p>
-
-</footer>
-
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="nav-logo">BK<span>.</span></a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section id="home" class="hero">
+            <div class="container reveal">
+                <div class="profile-container">
+                    <div class="profile-img-wrap">
+                        <!-- Referencing the actual image file available in directory -->
+                        <img src="pic%20whitebg.jpg" alt="Biswajeet Kumar" class="profile-img" onerror="this.src='https://avatars.githubusercontent.com/Biswajeet111'">
+                    </div>
+                </div>
+                
+                <h1>Biswajeet Kumar</h1>
+                
+                <div class="typing-wrapper">
+                    <div class="hero-subtitle">Full-Stack Developer | AI Enthusiast</div>
+                </div>
+                
+                <p class="hero-desc">
+                    Computer Science Engineering student passionate about crafting digital experiences, building scalable real-world applications using modern web and AI technologies.
+                </p>
+                
+                <div class="btn-group">
+                    <a href="Resume.pdf" class="btn btn-primary" target="_blank">
+                        <i class="fa-solid fa-file-pdf"></i> View Resume
+                    </a>
+                    <a href="https://github.com/Biswajeet111" class="btn btn-secondary" target="_blank">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/biswajeet-kumar-a70043362" class="btn btn-secondary" target="_blank">
+                        <i class="fa-brands fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME -->
+        <section id="about">
+            <div class="container reveal">
+                <h2 class="section-title">About <span>Me</span></h2>
+                
+                <div class="about-grid">
+                    <div class="about-text glass-card">
+                        <p>
+                            I am a Computer Science Engineering student passionate about building real-world scalable applications using modern technologies.
+                        </p>
+                        <p>
+                            I specialize in <strong>full-stack development</strong> and <strong>AI-powered systems</strong>, with hands-on experience developing intelligent applications such as AI-based study planners and financial analytics platforms.
+                        </p>
+                        <p>
+                            My expertise includes backend architecture, Machine Learning integration, and deploying production-ready applications to cloud platforms. I thrive on solving complex problems and translating ideas into robust digital solutions.
+                        </p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">4+</div>
+                            <div class="stat-label">Full-Stack Apps</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Github Repos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">AI</div>
+                            <div class="stat-label">LLM Integrations</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Commitment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <div class="container reveal">
+                <h2 class="section-title">Technical <span>Arsenal</span></h2>
+                
+                <div class="skills-grid">
+                    <!-- Frontend -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Frontend</h3>
+                        <div class="skill-item">
+                            <i class="devicon-react-original skill-icon"></i>
+                            <span class="skill-name">React.js & Next.js</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-html5-plain skill-icon"></i>
+                            <span class="skill-name">HTML / CSS / JS</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-tailwindcss-plain skill-icon"></i>
+                            <span class="skill-name">Tailwind CSS</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Backend -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Backend</h3>
+                        <div class="skill-item">
+                            <i class="devicon-python-plain skill-icon"></i>
+                            <span class="skill-name">Python & FastAPI</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-nodejs-plain skill-icon"></i>
+                            <span class="skill-name">Node.js</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-server skill-icon"></i>
+                            <span class="skill-name">RESTful APIs</span>
+                        </div>
+                    </div>
+
+                    <!-- Database -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Databases</h3>
+                        <div class="skill-item">
+                            <i class="devicon-postgresql-plain skill-icon"></i>
+                            <span class="skill-name">PostgreSQL & MySQL</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-mongodb-plain skill-icon"></i>
+                            <span class="skill-name">MongoDB</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-firebase-plain skill-icon"></i>
+                            <span class="skill-name">Firebase</span>
+                        </div>
+                    </div>
+
+                    <!-- AI & Tools -->
+                    <div class="glass-card">
+                        <h3 style="margin-bottom: 20px; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">AI & Tools</h3>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-brain skill-icon"></i>
+                            <span class="skill-name">Machine Learning / LLMs</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="devicon-git-plain skill-icon"></i>
+                            <span class="skill-name">Git & GitHub</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-cloud skill-icon"></i>
+                            <span class="skill-name">Vercel & Render</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <div class="container reveal">
+                <h2 class="section-title">Featured <span>Projects</span></h2>
+                
+                <div class="projects-grid">
+                    
+                    <!-- Space for Project 1: StudyForge -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <i class="fa-regular fa-folder-open folder-icon"></i>
+                            <div class="project-links">
+                                <a href="https://github.com/Biswajeet111/ai-study-planner-agent" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                                <a href="#" title="External Link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">StudyForge AI</h3>
+                        <p class="project-desc">
+                            AI-powered personalized study planner utilizing ML and LLM-based insights. Features an intelligent analytics dashboard, real-time progress tracking, and risk detection.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-pill">Next.js</span>
+                            <span class="tech-pill">FastAPI</span>
+                            <span class="tech-pill">MongoDB</span>
+                            <span class="tech-pill">Scikit-Learn</span>
+                        </div>
+                    </div>
+
+                    <!-- Space for Project 2: Expense System -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <i class="fa-regular fa-folder-open folder-icon"></i>
+                            <div class="project-links">
+                                <a href="https://github.com/Biswajeet111" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Smart Expense System</h3>
+                        <p class="project-desc">
+                            An AI-powered financial analytics platform intended for payroll automation and intuitive tracking of daily and monthly expenses.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-pill">React</span>
+                            <span class="tech-pill">FastAPI</span>
+                            <span class="tech-pill">PostgreSQL</span>
+                        </div>
+                    </div>
+
+                    <!-- Space for Project 3: ResQ -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <i class="fa-regular fa-folder-open folder-icon"></i>
+                            <div class="project-links">
+                                <a href="https://github.com/Biswajeet111" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">ResQ Emergency App</h3>
+                        <p class="project-desc">
+                            A robust mobile application designed to instantly locate nearby hospitals, emergency contacts, and streamline rapid emergency response orchestration.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-pill">Android</span>
+                            <span class="tech-pill">Firebase</span>
+                            <span class="tech-pill">Maps API</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS -->
+        <section id="achievements">
+            <div class="container reveal">
+                <h2 class="section-title">Notable <span>Achievements</span></h2>
+                
+                <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                    <ul class="achievements-list">
+                        <li>
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>Participated and excelled in the <strong>Code-A-Haunt 3.0 Hackathon</strong>.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-rocket"></i>
+                            <span>Architected and launched <strong>4+ robust full-stack applications</strong> addressing real-world issues.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-microchip"></i>
+                            <span>Integrated advanced <strong>LLMs and Machine Learning models</strong> into production-ready software.</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Successfully orchestrated cloud deployments on platforms like Vercel and Render.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="container reveal">
+                <div class="glass-card contact-content">
+                    <h2 class="section-title" style="margin-bottom: 20px;">Get In <span>Touch</span></h2>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                        I am currently open to internship opportunities in Software Development, Full-Stack Development, and AI Engineering. Let's connect!
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:biswajeetk497@gmail.com" style="color: var(--text-primary); text-decoration: none;">biswajeetk497@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Jamshedpur, Jharkhand, India</span>
+                        </div>
+                    </div>
+
+                    <a href="mailto:biswajeetk497@gmail.com" class="btn btn-primary" style="margin-top: 10px;">
+                        Say Hello <i class="fa-solid fa-paper-plane"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Biswajeet Kumar. Designed & Built with passion.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Optional: stop observing once revealed
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+            
+            // Trigger immediately for items strictly in viewport on load
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    const windowHeight = window.innerHeight;
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 50) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }, 100);
+        });
+    </script>
 </body>
-
 </html>
