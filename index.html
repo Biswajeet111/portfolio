@@ -17,23 +17,37 @@
 
     <style>
         :root {
-            /* Core Theme */
+            /* Core Theme (Dark) */
             --bg-color: #050505;
             --surface-color: rgba(255, 255, 255, 0.03);
             --surface-hover: rgba(255, 255, 255, 0.06);
             --border-color: rgba(255, 255, 255, 0.08);
             --border-glow: rgba(59, 130, 246, 0.3);
-            
-            /* Text Colors */
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-tertiary: #64748b;
-            
-            /* Accents */
             --accent-solid: #3b82f6;
             --accent-glow: #8b5cf6;
             --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
             --gradient-text: linear-gradient(to right, #60a5fa, #c084fc);
+            --card-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        :root[data-theme="light"] {
+            /* Core Theme (Light) */
+            --bg-color: #f8fafc;
+            --surface-color: rgba(0, 0, 0, 0.04);
+            --surface-hover: rgba(0, 0, 0, 0.08);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --border-glow: rgba(59, 130, 246, 0.2);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --accent-solid: #2563eb;
+            --accent-glow: #7c3aed;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #7c3aed);
+            --gradient-text: linear-gradient(to right, #1d4ed8, #6d28d9);
+            --card-bg: #ffffff;
         }
 
         * {
@@ -129,6 +143,162 @@
         }
         .nav-links a:hover {
             color: var(--text-primary);
+        }
+
+        .theme-toggle-btn {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 10px;
+        }
+        .theme-toggle-btn:hover {
+            background: var(--surface-hover);
+            transform: rotate(15deg);
+        }
+
+        /* CERT COUNTER & FILTERS */
+        .cert-counter {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .cert-counter i {
+            color: #fbbf24;
+            font-size: 1.4rem;
+        }
+
+        .cert-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 45px;
+        }
+        .filter-btn {
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background: var(--surface-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            border-color: var(--accent-solid);
+        }
+        .filter-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* MODAL */
+        .cert-modal {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cert-modal.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .cert-modal.active .modal-content {
+            transform: scale(1);
+        }
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            z-index: 10002;
+            transition: 0.3s;
+        }
+        .close-modal:hover {
+            color: var(--accent-solid);
+            transform: rotate(90deg);
+        }
+
+        /* PREVIEW FRAME */
+        .preview-frame {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+        }
+        .preview-frame img, .preview-frame embed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none; /* Prevents interaction with embed inside frame */
+        }
+        .preview-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            opacity: 0;
+        }
+        .preview-frame:hover .preview-overlay {
+            background: rgba(0,0,0,0.4);
+            opacity: 1;
+        }
+        .preview-overlay i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        @media screen and (max-width: 576px) {
+            .cert-filters { gap: 8px; }
+            .filter-btn { font-size: 0.8rem; padding: 8px 16px; }
+            .modal-content { max-width: 95%; }
+            .project-card { padding: 20px; }
+            .preview-frame { height: 160px; }
         }
 
         @media screen and (max-width: 768px) {
@@ -576,6 +746,7 @@
                 <a href="#achievements">Achievements</a>
                 <a href="#certifications">Certifications</a>
                 <a href="#contact">Contact</a>
+                <button class="theme-toggle-btn" id="theme-toggle" title="Switch Theme"><i class="fa-solid fa-moon"></i></button>
             </div>
         </div>
     </nav>
@@ -833,473 +1004,419 @@
         <!-- CERTIFICATIONS -->
         <section id="certifications">
             <div class="container reveal">
-                <h2 class="section-title">My <span>Certifications</span></h2>
-                
-                <div class="projects-grid">
-                    
-                    <!-- Certificate 1 -->
-                    <div class="project-card">
+                <h2 class="section-title">Professional <span>Certifications</span></h2>
+                <div class="cert-counter"><i class="fa-solid fa-award"></i><span>25+ Verified Certifications</span></div>
+                <div class="cert-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai">AI</button>
+                    <button class="filter-btn" data-filter="programming">Programming</button>
+                    <button class="filter-btn" data-filter="hackathon">Hackathons</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                </div>
+                <div class="projects-grid" id="cert-grid">
+                    <!-- HACKATHONS -->
+                    <div class="project-card" data-category="hackathon">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/DOC-20250108-WA0000..pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM SkillsBuild Certification (1)</h3>
-                        <p class="project-desc">
-                            Completed essential foundations through IBM SkillsBuild.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/DOC-20250108-WA0000..pdf', true)">
+                            <embed src="Certificates/DOC-20250108-WA0000..pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Code-A-Haunt 3.0 National Hackathon — Participation Certificate</h3>
+                        <p class="project-desc">Participated in the Code-A-Haunt 3.0 national-level hackathon, demonstrating strong coding and problem-solving skills in a competitive environment.</p>
+                        <div class="project-tech"><span class="tech-pill">Hackathon</span><span class="tech-pill">National</span></div>
                     </div>
 
-                    <!-- Certificate 2 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="hackathon">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild1.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/DOC-20250119-WA0004..pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM SkillsBuild Certification (2)</h3>
-                        <p class="project-desc">
-                            Completed advanced cloud and software concepts through IBM SkillsBuild.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/DOC-20250119-WA0004..pdf', true)">
+                            <embed src="Certificates/DOC-20250119-WA0004..pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">WEB-A-THON 2.0 University Hackathon — Participation Certificate</h3>
+                        <p class="project-desc">Participated in WEB-A-THON 2.0, showcasing skills in web development, UI design, and strategic problem-solving.</p>
+                        <div class="project-tech"><span class="tech-pill">Hackathon</span><span class="tech-pill">Web</span></div>
                     </div>
 
-                    <!-- Certificate 3 -->
-                    <div class="project-card">
+                    <!-- AI -->
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild2.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Ai_nextGen.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM SkillsBuild Certification (3)</h3>
-                        <p class="project-desc">
-                            Earned certification for specialized skills via IBM SkillsBuild.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Ai_nextGen.pdf', true)">
+                            <embed src="Certificates/Ai_nextGen.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">IBM AI NextGen Certification Program — IBM SkillsBuild</h3>
+                        <p class="project-desc">Completed the IBM AI NextGen program, gaining knowledge of artificial intelligence fundamentals and real-world AI applications.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 4 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild3.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Digital%20Sticker_IBM%20Granite%20Models%20for%20Software%20Development.png" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM SkillsBuild Certification (4)</h3>
-                        <p class="project-desc">
-                            Completed industry-standard technical training from IBM.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Digital%20Sticker_IBM%20Granite%20Models%20for%20Software%20Development.png', false)">
+                            <img src="Certificates/Digital%20Sticker_IBM%20Granite%20Models%20for%20Software%20Development.png" alt="IBM Granite Models">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">IBM Granite Models for Software Development</h3>
+                        <p class="project-desc">Learned to use IBM Granite AI models for code generation, AI-assisted development, and enterprise-level workflows.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 5 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild4.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild1.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM SkillsBuild Certification (5)</h3>
-                        <p class="project-desc">
-                            Achieved proficiency in technical domains instructed by IBM.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Completion%20Certificate%20_%20SkillsBuild1.pdf', true)">
+                            <embed src="Certificates/Completion%20Certificate%20_%20SkillsBuild1.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">AI-Powered Chatbots Development</h3>
+                        <p class="project-desc">Built knowledge of chatbot development, conversational AI design, and automated response systems.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">Chatbots</span></div>
                     </div>
 
-                    <!-- Certificate 2 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Digital%20Sticker_IBM%20Granite%20Models%20for%20Software%20Development.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild2.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">IBM Granite Models</h3>
-                        <p class="project-desc">
-                            Earned recognition for working with IBM Granite Models for Software Development.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">IBM</span>
-                            <span class="tech-pill">AI</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Completion%20Certificate%20_%20SkillsBuild2.pdf', true)">
+                            <embed src="Certificates/Completion%20Certificate%20_%20SkillsBuild2.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">AI-Powered Ticket Routing & Recommendation Systems</h3>
+                        <p class="project-desc">Learned to design AI systems that automatically route tickets and provide intelligent recommendations.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 3 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/I%20have%20completed%20Java%20Course%20-%20Mastering%20the%20Fundamentals%20on%20Scaler%20Topics.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild3.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Mastering Java Fundamentals</h3>
-                        <p class="project-desc">
-                            Comprehensive course covering core Java programming concepts and object-oriented paradigms.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Scaler</span>
-                            <span class="tech-pill">Java</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Completion%20Certificate%20_%20SkillsBuild3.pdf', true)">
+                            <embed src="Certificates/Completion%20Certificate%20_%20SkillsBuild3.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Knowledge Management Systems & Customer Analytics</h3>
+                        <p class="project-desc">Developed skills in managing enterprise knowledge systems and analyzing customer behavior using AI.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">Analytics</span></div>
                     </div>
 
-                    <!-- Certificate 4 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Infosys_DataScience_Cert.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Completion%20Certificate%20_%20SkillsBuild4.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Data Science Certification</h3>
-                        <p class="project-desc">
-                            Acquired core competencies in Data Science, including data wrangling, analysis, and ML concepts.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Infosys Springboard</span>
-                            <span class="tech-pill">Data Science</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Completion%20Certificate%20_%20SkillsBuild4.pdf', true)">
+                            <embed src="Certificates/Completion%20Certificate%20_%20SkillsBuild4.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">AI-Enabled Applications for Customer Service</h3>
+                        <p class="project-desc">Built understanding of intelligent customer service systems powered by artificial intelligence.</p>
+                        <div class="project-tech"><span class="tech-pill">IBM</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 5 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/microsoft%20gen%20ai.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Screenshot%202026-03-25%20175125.png" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Microsoft Generative AI</h3>
-                        <p class="project-desc">
-                            Mastery of Generative AI principles, use cases, and responsible AI practices.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Microsoft</span>
-                            <span class="tech-pill">Generative AI</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Screenshot%202026-03-25%20175125.png', false)">
+                            <img src="Certificates/Screenshot%202026-03-25%20175125.png" alt="Agentic AI">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Python Programming for Agentic AI — Agentic AI Saksham</h3>
+                        <p class="project-desc">Participated in a 2-day hands-on workshop focused on Python programming techniques used in building Agentic AI systems.</p>
+                        <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 6 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/microsoft%20copilot.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Screenshot%202026-03-25%20175456.png" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Microsoft Copilot</h3>
-                        <p class="project-desc">
-                            Hands-on experience with Microsoft Copilot, exploring AI-assisted productivity and automation.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Microsoft</span>
-                            <span class="tech-pill">Copilot</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Screenshot%202026-03-25%20175456.png', false)">
+                            <img src="Certificates/Screenshot%202026-03-25%20175456.png" alt="Gen AI">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Generative AI Program — NASSCOM Skill Development</h3>
+                        <p class="project-desc">Completed industry-aligned training in Generative AI, focusing on real-world applications and AI-driven solutions.</p>
+                        <div class="project-tech"><span class="tech-pill">NASSCOM</span><span class="tech-pill">GenAI</span></div>
                     </div>
 
-                    <!-- Certificate 7 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/MS%20cyber.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/microsoft%20gen%20ai.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Microsoft Cybersecurity</h3>
-                        <p class="project-desc">
-                            Explored fundamental concepts in cybersecurity, threat protection, and digital safety.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Microsoft</span>
-                            <span class="tech-pill">Cybersecurity</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/microsoft%20gen%20ai.pdf', true)">
+                            <embed src="Certificates/microsoft%20gen%20ai.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Learn AI and Generative AI Basics — Microsoft</h3>
+                        <p class="project-desc">Learned core AI and Generative AI concepts including model usage, real-world applications, and responsible AI practices.</p>
+                        <div class="project-tech"><span class="tech-pill">Microsoft</span><span class="tech-pill">AI</span></div>
                     </div>
 
-                    <!-- Certificate 8 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/c++%20Cert.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Certificate.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">C++ Programming Certification</h3>
-                        <p class="project-desc">
-                            Validation of C++ programming skills, including memory management and advanced data structures.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">C++</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Certificate.pdf', true)">
+                            <embed src="Certificates/Certificate.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Stock Market Using AI — Workshop Certification</h3>
+                        <p class="project-desc">Explored AI-based stock analysis techniques, automated trading strategies, and financial prediction models.</p>
+                        <div class="project-tech"><span class="tech-pill">AI</span><span class="tech-pill">Finance</span></div>
                     </div>
 
-                    <!-- Certificate 9 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="ai">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Ai_nextGen.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/microsoft%20copilot.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Generative AI Foundations</h3>
-                        <p class="project-desc">
-                            Foundational understanding of next-generation AI technologies and their applications.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">AI</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/microsoft%20copilot.pdf', true)">
+                            <embed src="Certificates/microsoft%20copilot.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Get Started with Microsoft Copilot</h3>
+                        <p class="project-desc">Learned to use Microsoft Copilot for AI-assisted coding, productivity automation, and workflow optimization.</p>
+                        <div class="project-tech"><span class="tech-pill">Microsoft</span><span class="tech-pill">Copilot</span></div>
                     </div>
 
-                    <!-- Certificate 10 -->
-                    <div class="project-card">
+                    <!-- PROGRAMMING -->
+                    <div class="project-card" data-category="programming">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/automation.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/I%20have%20completed%20Java%20Course%20-%20Mastering%20the%20Fundamentals%20on%20Scaler%20Topics.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Automation Fundamentals</h3>
-                        <p class="project-desc">
-                            Core concepts of process automation, scripting, and improving workflow efficiency.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Automation</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/I%20have%20completed%20Java%20Course%20-%20Mastering%20the%20Fundamentals%20on%20Scaler%20Topics.pdf', true)">
+                            <embed src="Certificates/I%20have%20completed%20Java%20Course%20-%20Mastering%20the%20Fundamentals%20on%20Scaler%20Topics.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Java Programming — Mastering the Fundamentals</h3>
+                        <p class="project-desc">Learned object-oriented programming concepts, Java syntax, and application development fundamentals.</p>
+                        <div class="project-tech"><span class="tech-pill">Java</span><span class="tech-pill">OOP</span></div>
                     </div>
 
-                    <!-- Certificate 11 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="programming">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Infosys_Presentation.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/c++%20Cert.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Presentation Skills</h3>
-                        <p class="project-desc">
-                            Enhanced professional communication and presentation skills.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Infosys Springboard</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/c++%20Cert.pdf', true)">
+                            <embed src="Certificates/c++%20Cert.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">C++ Course — Learn the Essentials</h3>
+                        <p class="project-desc">Completed structured training covering C++ fundamentals, problem-solving, and core programming concepts.</p>
+                        <div class="project-tech"><span class="tech-pill">C++</span></div>
                     </div>
 
-                    <!-- Certificate 12 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="programming">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Infosys_TimeManagement.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/CERT_VT.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Time Management</h3>
-                        <p class="project-desc">
-                            Developed effective time management strategies and productivity practices.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Infosys Springboard</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/CERT_VT.pdf', true)">
+                            <embed src="Certificates/CERT_VT.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Industrial Vocational Training — Tata Steel</h3>
+                        <p class="project-desc">Completed hands-on web development training at Tata Steel, focusing on real-world software development practices.</p>
+                        <div class="project-tech"><span class="tech-pill">Training</span><span class="tech-pill">Web</span></div>
                     </div>
 
-                    <!-- Certificate 16 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="programming">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/CERT_VT.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/12c4ed65-33fc-4e82-8800-7aa3cdbd4e79.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Vocational Training</h3>
-                        <p class="project-desc">
-                            Successfully completed practical vocational training relevant to software engineering & IT.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Vocational Training</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/12c4ed65-33fc-4e82-8800-7aa3cdbd4e79.pdf', true)">
+                            <embed src="Certificates/12c4ed65-33fc-4e82-8800-7aa3cdbd4e79.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Software Engineering Job Simulation — Forage</h3>
+                        <p class="project-desc">Completed hands-on tasks involving architecture design, testing, security, and Agile development workflows.</p>
+                        <div class="project-tech"><span class="tech-pill">Forage</span><span class="tech-pill">SWE</span></div>
                     </div>
 
-                    <!-- Additional Certificate 1 -->
-                    <div class="project-card">
+                    <!-- TOOLS -->
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Certificate.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/automation.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">General Certification</h3>
-                        <p class="project-desc">
-                            Verified participation and skill acquisition.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Certification</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/automation.pdf', true)">
+                            <embed src="Certificates/automation.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Certified Essentials Automation Professional — Automation Anywhere</h3>
+                        <p class="project-desc">Gained expertise in robotic process automation (RPA), workflow automation, and enterprise automation tools.</p>
+                        <div class="project-tech"><span class="tech-pill">Automation</span><span class="tech-pill">RPA</span></div>
                     </div>
 
-                    <!-- Additional Certificate 2 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/DOC-20250108-WA0000..pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/5fbc0cc4-3b79-4740-af32-0b4c6238e909.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Achievement Document (1)</h3>
-                        <p class="project-desc">
-                            Document recognizing technical achievement and participation.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/5fbc0cc4-3b79-4740-af32-0b4c6238e909.pdf', true)">
+                            <embed src="Certificates/5fbc0cc4-3b79-4740-af32-0b4c6238e909.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Cybersecurity Analyst Job Simulation — Forage</h3>
+                        <p class="project-desc">Learned identity management, access control systems, and cybersecurity architecture fundamentals.</p>
+                        <div class="project-tech"><span class="tech-pill">Forage</span><span class="tech-pill">Cyber</span></div>
                     </div>
 
-                    <!-- Additional Certificate 3 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/DOC-20250119-WA0004..pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Infosys_DataScience_Cert.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Achievement Document (2)</h3>
-                        <p class="project-desc">
-                            Document recognizing technical achievement and participation.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Infosys_DataScience_Cert.pdf', true)">
+                            <embed src="Certificates/Infosys_DataScience_Cert.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">Introduction to Data Science — Infosys Springboard</h3>
+                        <p class="project-desc">Learned core data science concepts including data analysis, visualization, and machine learning fundamentals.</p>
+                        <div class="project-tech"><span class="tech-pill">Data Science</span><span class="tech-pill">Infosys</span></div>
                     </div>
 
-                    <!-- Additional Certificate 4 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
                             <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/5fbc0cc4-3b79-4740-af32-0b4c6238e909.pdf" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Infosys_Presentation.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Specialized Certification</h3>
-                        <p class="project-desc">
-                            Specialized technical certification.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-pill">Certification</span>
+                        <div class="preview-frame" onclick="openModal('Certificates/Infosys_Presentation.pdf', true)">
+                            <embed src="Certificates/Infosys_Presentation.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
+                        <h3 class="project-title">High Impact Presentations — Infosys Springboard</h3>
+                        <p class="project-desc">Developed strong presentation and communication skills for technical and professional settings.</p>
+                        <div class="project-tech"><span class="tech-pill">Soft Skills</span><span class="tech-pill">Infosys</span></div>
                     </div>
 
-                    <!-- Verified Credentials PNG -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
-                            <i class="fa-solid fa-image folder-icon"></i>
+                            <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/42c2c0024f54ded6918588cd32d25436125126667982c2f5e17b9c68547cbcc2.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Infosys_TimeManagement.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Verified Credential</h3>
-                        <p class="project-desc">
-                            Digital badge and verified credential of achievement.
-                        </p>
-                        <div style="margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                            <img src="Certificates/42c2c0024f54ded6918588cd32d25436125126667982c2f5e17b9c68547cbcc2.png" alt="Credential Image" style="width: 100%; height: 150px; object-fit: cover; background: white;">
+                        <div class="preview-frame" onclick="openModal('Certificates/Infosys_TimeManagement.pdf', true)">
+                            <embed src="Certificates/Infosys_TimeManagement.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
-                        <div class="project-tech">
-                            <span class="tech-pill">Credential</span>
-                        </div>
+                        <h3 class="project-title">Time Management — Infosys Springboard</h3>
+                        <p class="project-desc">Learned productivity techniques to manage time effectively and improve workflow efficiency.</p>
+                        <div class="project-tech"><span class="tech-pill">Soft Skills</span><span class="tech-pill">Infosys</span></div>
                     </div>
 
-                    <!-- Screenshot 1 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="tools">
                         <div class="project-header">
-                            <i class="fa-solid fa-image folder-icon"></i>
+                            <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Screenshot%202026-03-25%20175125.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/MS%20cyber.pdf" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Achievement Snapshot (1)</h3>
-                        <p class="project-desc">
-                            Visual proof of completion and skill validation captured directly from the certification portal.
-                        </p>
-                        <div style="margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                            <img src="Certificates/Screenshot%202026-03-25%20175125.png" alt="Screenshot 1" style="width: 100%; height: 150px; object-fit: cover; background: white;">
+                        <div class="preview-frame" onclick="openModal('Certificates/MS%20cyber.pdf', true)">
+                            <embed src="Certificates/MS%20cyber.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
-                        </div>
+                        <h3 class="project-title">Cybersecurity Fundamentals — Microsoft</h3>
+                        <p class="project-desc">Explored cybersecurity principles including threat awareness, secure systems, and digital safety fundamentals.</p>
+                        <div class="project-tech"><span class="tech-pill">Microsoft</span><span class="tech-pill">Cyber</span></div>
                     </div>
 
-                    <!-- Screenshot 2 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="hackathon">
                         <div class="project-header">
-                            <i class="fa-solid fa-image folder-icon"></i>
+                            <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Screenshot%202026-03-25%20175312.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Screenshot%202026-03-25%20175312.png" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Achievement Snapshot (2)</h3>
-                        <p class="project-desc">
-                            Visual proof of completion and skill validation captured directly from the certification portal.
-                        </p>
-                        <div style="margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                            <img src="Certificates/Screenshot%202026-03-25%20175312.png" alt="Screenshot 2" style="width: 100%; height: 150px; object-fit: cover; background: white;">
+                        <div class="preview-frame" onclick="openModal('Certificates/Screenshot%202026-03-25%20175312.png', false)">
+                            <img src="Certificates/Screenshot%202026-03-25%20175312.png" alt="Buildathon">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
-                        </div>
+                        <h3 class="project-title">India AI Impact Buildathon — National AI Innovation Challenge</h3>
+                        <p class="project-desc">Participated in a nationwide AI innovation challenge involving AI-based problem solving.</p>
+                        <div class="project-tech"><span class="tech-pill">AI</span><span class="tech-pill">National</span></div>
                     </div>
 
-                    <!-- Screenshot 3 -->
-                    <div class="project-card">
+                    <div class="project-card" data-category="hackathon">
                         <div class="project-header">
-                            <i class="fa-solid fa-image folder-icon"></i>
+                            <i class="fa-solid fa-award folder-icon"></i>
                             <div class="project-links">
-                                <a href="Certificates/Screenshot%202026-03-25%20175349.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <a href="Certificates/Screenshot%202026-03-25%20175349.png" target="_blank" title="View Document"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                             </div>
                         </div>
-                        <h3 class="project-title">Achievement Snapshot (3)</h3>
-                        <p class="project-desc">
-                            Visual proof of completion and skill validation captured directly from the certification portal.
-                        </p>
-                        <div style="margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                            <img src="Certificates/Screenshot%202026-03-25%20175349.png" alt="Screenshot 3" style="width: 100%; height: 150px; object-fit: cover; background: white;">
+                        <div class="preview-frame" onclick="openModal('Certificates/Screenshot%202026-03-25%20175349.png', false)">
+                            <img src="Certificates/Screenshot%202026-03-25%20175349.png" alt="Hacksagon">
+                            <div class="preview-overlay"><i class="fa-solid fa-expand"></i></div>
                         </div>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
-                        </div>
+                        <h3 class="project-title">HACKSAGON 2026 — IEEE Ideation Phase Participant</h3>
+                        <p class="project-desc">Participated in the IEEE Hacksagon 2026 ideation phase, contributing innovative technology ideas.</p>
+                        <div class="project-tech"><span class="tech-pill">IEEE</span><span class="tech-pill">Ideation</span></div>
                     </div>
-
-                    <!-- Screenshot 4 -->
-                    <div class="project-card">
-                        <div class="project-header">
-                            <i class="fa-solid fa-image folder-icon"></i>
-                            <div class="project-links">
-                                <a href="Certificates/Screenshot%202026-03-25%20175456.png" target="_blank" title="View Certificate"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">Achievement Snapshot (4)</h3>
-                        <p class="project-desc">
-                            Visual proof of completion and skill validation captured directly from the certification portal.
-                        </p>
-                        <div style="margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                            <img src="Certificates/Screenshot%202026-03-25%20175456.png" alt="Screenshot 4" style="width: 100%; height: 150px; object-fit: cover; background: white;">
-                        </div>
-                        <div class="project-tech">
-                            <span class="tech-pill">Achievement</span>
-                        </div>
-                    </div>
-
 
                 </div>
             </div>
@@ -1372,7 +1489,84 @@
                     }
                 });
             }, 100);
+
+            // --- NEW: THEME TOGGLE LOGIC ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeIcon.className = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+
+            // --- NEW: CERTIFICATE FILTERING ---
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const certCards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.dataset.filter;
+                    certCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // --- NEW: MODAL LOGIC ---
+            const modal = document.getElementById('certModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalPDF = document.getElementById('modalPDF');
+            const closeModal = document.querySelector('.close-modal');
+
+            window.openModal = function(src, isPDF) {
+                modal.classList.add('active');
+                if (isPDF) {
+                    modalImg.style.display = 'none';
+                    modalPDF.style.display = 'block';
+                    modalPDF.src = src;
+                } else {
+                    modalPDF.style.display = 'none';
+                    modalImg.style.display = 'block';
+                    modalImg.src = src;
+                }
+            };
+
+            closeModal.onclick = () => {
+                modal.classList.remove('active');
+                modalPDF.src = ""; // Stop PDF loading/audio
+            };
+            
+            window.onclick = (e) => { 
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    modalPDF.src = "";
+                }
+            };
         });
     </script>
+    <!-- CERTIFICATE MODAL -->
+    <div id="certModal" class="cert-modal">
+        <span class="close-modal">&times;</span>
+        <div id="modalContainer" style="width: 100%; display: flex; justify-content: center;">
+            <img class="modal-content" id="modalImg" style="display:none;">
+            <iframe class="modal-content" id="modalPDF" style="display:none; width: 80%; height: 85vh; border:none;"></iframe>
+        </div>
+    </div>
 </body>
 </html>
