@@ -586,6 +586,11 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
+        .project-card:first-child {
+            border: 1px solid rgba(59,130,246,0.4);
+            box-shadow: 0 0 30px rgba(59,130,246,0.2);
+        }
+
         .project-card:hover::before {
             opacity: 1;
         }
@@ -910,6 +915,47 @@
                 
                 <div class="projects-grid">
                     
+                    <!-- Project 0: VisionExtract AI (Featured) -->
+                    <div class="project-card">
+
+                        <div class="project-header">
+                            <i class="fa-solid fa-brain folder-icon"></i>
+                            <div class="project-links">
+                                <a href="https://github.com/Biswajeet111/VisionExtract" 
+                                   target="_blank" title="GitHub">
+                                   <i class="fa-brands fa-github"></i>
+                                </a>
+
+                                <a href="https://github.com/Biswajeet111/VisionExtract" 
+                                   target="_blank" title="External Link">
+                                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <h3 class="project-title">
+                            ⭐ VisionExtract AI — Deep Learning Subject Isolation
+                        </h3>
+
+                        <p class="project-desc">
+                            High-performance computer vision system that automatically isolates 
+                            subjects from images using a ResNet-UNet deep learning architecture. 
+                            Trained on 30,000+ COCO dataset images with GPU acceleration, 
+                            mixed precision training, and advanced augmentation techniques.
+                            Achieved <strong>0.62+ IoU</strong> and production-level segmentation accuracy.
+                        </p>
+
+                        <div class="project-tech">
+                            <span class="tech-pill">PyTorch</span>
+                            <span class="tech-pill">Computer Vision</span>
+                            <span class="tech-pill">Deep Learning</span>
+                            <span class="tech-pill">OpenCV</span>
+                            <span class="tech-pill">Streamlit</span>
+                            <span class="tech-pill">CUDA</span>
+                        </div>
+
+                    </div>
+
                     <!-- Space for Project 1: StudyForge -->
                     <div class="project-card">
                         <div class="project-header">
